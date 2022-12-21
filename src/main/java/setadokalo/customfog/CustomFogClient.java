@@ -1,5 +1,7 @@
 package setadokalo.customfog;
 
+import org.apache.logging.log4j.Level;
+
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -8,8 +10,9 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
+
 import net.minecraft.util.Identifier;
-import org.apache.logging.log4j.Level;
+
 import setadokalo.customfog.config.ConfigLoader;
 import setadokalo.customfog.config.CustomFogConfig;
 import setadokalo.customfog.config.ServerConfig;

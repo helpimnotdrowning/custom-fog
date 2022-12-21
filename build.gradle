@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.12-SNAPSHOT'
+    id 'fabric-loom' version '1.0-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -15,18 +15,19 @@ repositories {
         name = 'ModMenu'
         url = 'https://maven.terraformersmc.com/releases/'
     }
-    // taken from FlashyReese/sodium-extra-fabric
-    maven {
-    name = "Modrinth (for Sodium)"
-    url = "https://api.modrinth.com/maven"
-    content {
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
             includeGroup "maven.modrinth"
         }
     }
     maven { url 'https://jitpack.io' }
-    flatDir {
-        dirs 'libs'
-    }
+    mavenCentral()
 }
 
 dependencies {
@@ -43,7 +44,7 @@ dependencies {
     // allows testing with canvas/indigo renderers
     modCompileOnly "maven.modrinth:sodium:${project.sodium_version}"
     // This is supposed to load with sodium, but doesn't seem to want to in the dev environment
-    runtimeOnly 'org.joml:joml:1.10.2'
+    runtimeOnly 'org.joml:joml:1.10.4'
 }
 
 processResources {

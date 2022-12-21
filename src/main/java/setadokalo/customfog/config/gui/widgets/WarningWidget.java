@@ -1,5 +1,11 @@
 package setadokalo.customfog.config.gui.widgets;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -15,15 +21,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import org.apache.logging.log4j.Level;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import setadokalo.customfog.CustomFogLogger;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class WarningWidget implements Drawable, Element, Selectable {
 	@Override
@@ -234,8 +231,8 @@ public class WarningWidget implements Drawable, Element, Selectable {
 			ty += textRenderer.fontHeight + 2;
 		}
 		if (closeBtn != null) {
-			closeBtn.x = x + width - 8;
-			closeBtn.y = y;
+			closeBtn.setX(x + width - 8);
+			closeBtn.setY(y);
 			closeBtn.render(matrices, mouseX, mouseY, delta);
 		}
 		matrices.pop();

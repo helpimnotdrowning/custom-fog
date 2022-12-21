@@ -1,19 +1,17 @@
 package setadokalo.customfog.config.gui;
 
-import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.widget.TexturedButtonWidget;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+
 import setadokalo.customfog.CustomFogClient;
 import setadokalo.customfog.config.CustomFogConfig;
-import setadokalo.customfog.config.gui.widgets.ResizingRangeSlider;
 import setadokalo.customfog.config.gui.widgets.DimensionConfigEntry;
+import setadokalo.customfog.config.gui.widgets.ResizingRangeSlider;
 import setadokalo.customfog.config.gui.widgets.WarningWidget;
 
 public class DimensionConfigScreen extends Screen {
@@ -66,26 +64,57 @@ public class DimensionConfigScreen extends Screen {
 //				remove(btn);
 //			}));
 		}
-		this.addDrawableChild(new ButtonWidget(this.width - DONE_WIDTH - 9, this.height - 29, DONE_WIDTH, 20,
-				saveAndQuitText, btn -> {
-					CustomFogClient.config.overrideConfig = null;
-					if (this.client != null)
-						this.client.setScreen(this.parent);
-				}));
-		this.addDrawableChild(new ButtonWidget(9, modeRowHeight, 150, 20,
-			Text.translatable(getKeyForType(this.entry.config.getType())), btn -> {
-				this.entry.config.setType(this.entry.config.getType().next());
-				btn.setMessage(Text.translatable(getKeyForType(this.entry.config.getType())));
-				removeSliders();
-				addSliders();
-			}
-		));
-		this.addDrawableChild(new ButtonWidget(18 + 150, modeRowHeight, 75, 20,
-			enabledText, btn -> {
-				this.entry.config.setEnabled(!this.entry.config.getEnabled());
-				btn.setMessage(Text.translatable(getKeyForEnabled()));
-			}
-		));
+		this.addDrawableChild(new ButtonWidget
+				.Builder(
+						saveAndQuitText,
+						btn -> {
+							CustomFogClient.config.overrideConfig = null;
+							if (this.client != null)
+								this.client.setScreen(this.parent);
+						}
+				)
+				.dimensions(
+						this.width - DONE_WIDTH - 9,
+						this.height - 29,
+						DONE_WIDTH,
+						20
+				)
+				.build()
+		);
+		this.addDrawableChild(new ButtonWidget
+				.Builder(
+						Text.translatable(getKeyForType(this.entry.config.getType())),
+						btn -> {
+							this.entry.config.setType(this.entry.config.getType().next());
+							btn.setMessage(Text.translatable(getKeyForType(this.entry.config.getType())));
+							removeSliders();
+							addSliders();
+						}
+				)
+				.dimensions(
+						9,
+						modeRowHeight,
+						150,
+						20
+				)
+				.build()
+		);
+		this.addDrawableChild(new ButtonWidget
+				.Builder(
+						enabledText,
+						btn -> {
+							this.entry.config.setEnabled(!this.entry.config.getEnabled());
+							btn.setMessage(Text.translatable(getKeyForEnabled()));
+						}
+				)
+				.dimensions(
+						18 + 150,
+						modeRowHeight,
+						75,
+						20
+				)
+				.build()
+		);
 	}
 
 	private String getKeyForEnabled() {
@@ -129,7 +158,14 @@ public class DimensionConfigScreen extends Screen {
 			sliderHeight -= 29;
 		}
 		if (this.entry.config.getType() == CustomFogConfig.FogType.LINEAR) {
-			slider1 = new ResizingRangeSlider(9, sliderHeight, sliderWidth,  20, true, this.entry.config.getLinearStart(), 1.0,
+			slider1 = new ResizingRangeSlider(
+					9,
+					sliderHeight,
+					sliderWidth,
+					20,
+					true,
+					this.entry.config.getLinearStart(),
+					1.0,
 					nVal -> this.entry.config.setLinearStart(nVal.floatValue()),
 					s -> Text.translatable(
 							"option.customfog.linearslider",

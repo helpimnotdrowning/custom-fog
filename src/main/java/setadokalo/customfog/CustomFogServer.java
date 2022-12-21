@@ -1,11 +1,16 @@
 package setadokalo.customfog;
 
-import com.mojang.brigadier.context.CommandContext;
+import java.util.Objects;
+
+import org.apache.logging.log4j.Level;
+
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+
+import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -13,13 +18,11 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import org.apache.logging.log4j.Level;
+
 import setadokalo.customfog.config.ConfigLoader;
 import setadokalo.customfog.config.CustomFogConfig;
 import setadokalo.customfog.config.DimensionConfig;
 import setadokalo.customfog.config.ServerConfig;
-
-import java.util.Objects;
 
 public class CustomFogServer implements DedicatedServerModInitializer {
 	public static ServerConfig config = ServerConfig.getConfig();

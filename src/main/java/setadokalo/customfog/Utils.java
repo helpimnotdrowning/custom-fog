@@ -1,12 +1,13 @@
 package setadokalo.customfog;
 
-import net.minecraft.util.Identifier;
+import java.util.Objects;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import net.minecraft.util.Identifier;
 import setadokalo.customfog.config.DimensionConfig;
 import setadokalo.customfog.config.ServerConfig;
-
-import java.util.Objects;
 
 public class Utils {
 

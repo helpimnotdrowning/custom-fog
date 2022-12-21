@@ -2,22 +2,23 @@ package setadokalo.customfog.config.gui;
 
 import java.util.Map;
 
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import org.apache.logging.log4j.Level;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.apache.logging.log4j.Level;
 
+import net.fabricmc.loader.api.FabricLoader;
+
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
+
 import setadokalo.customfog.CustomFog;
 import setadokalo.customfog.CustomFogClient;
-import setadokalo.customfog.CustomFogLogger;
 import setadokalo.customfog.Utils;
 import setadokalo.customfog.config.CustomFogConfig;
 import setadokalo.customfog.config.DimensionConfig;
@@ -103,27 +104,55 @@ public class CustomFogConfigScreen extends Screen {
 		this.addSelectableChild(lWidget);
 
 		// Add load button.
-		this.addDrawableChild(new ButtonWidget(9, this.height - 29, 80, 20, Text.translatable("button.customfog.load"),
-				  btn -> {
-					  CustomFogClient.config = CustomFogConfig.getConfig();
-					  createList();
-				  }));
+		this.addDrawableChild(new ButtonWidget
+				.Builder(
+						Text.translatable("button.customfog.load"),
+						btn -> {
+							CustomFogClient.config = CustomFogConfig.getConfig();
+							createList();
+						}
+				)
+				.dimensions(
+						9,
+						this.height - 29,
+						80,
+						20
+				)
+				.build()
+		);
 		// Add done button.
 		int saveBtnX = Math.max(this.width / 2 - 100, 94);
 		int saveBtnWidth = Math.min(200, this.width - (saveBtnX + 5 + 160 + 8));
-		this.addDrawableChild(new ButtonWidget(
-				saveBtnX, this.height - 29,
-				saveBtnWidth, 20,
-				Text.translatable("button.customfog.saveandquit"),
-			btn -> saveDimensions()));
-		this.addDrawableChild(new ButtonWidget(
-				this.width - 165, this.height - 29,
-				160, 20,
-				Text.translatable("button.customfog.toggleVOptions", boolToEnabled(CustomFogClient.config.videoOptionsButton)),
-			btn -> {
-			CustomFogClient.config.videoOptionsButton = !CustomFogClient.config.videoOptionsButton;
-			btn.setMessage(Text.translatable("button.customfog.toggleVOptions", boolToEnabled(CustomFogClient.config.videoOptionsButton)));
-			}));
+		this.addDrawableChild(new ButtonWidget
+				.Builder(
+						Text.translatable("button.customfog.saveandquit"),
+						btn -> saveDimensions()
+				)
+				.dimensions(
+						saveBtnX,
+						this.height - 29,
+						saveBtnWidth,
+						20
+				)
+				.build()
+		);
+		// Add video options button
+		this.addDrawableChild(new ButtonWidget
+				.Builder(
+						Text.translatable("button.customfog.toggleVOptions", boolToEnabled(CustomFogClient.config.videoOptionsButton)),
+							btn -> {
+							CustomFogClient.config.videoOptionsButton = !CustomFogClient.config.videoOptionsButton;
+							btn.setMessage(Text.translatable("button.customfog.toggleVOptions", boolToEnabled(CustomFogClient.config.videoOptionsButton)));
+						}
+				)
+				.dimensions(
+						this.width - 165,
+						this.height - 29,
+						160,
+						20
+				)
+				.build()
+		);
   }
 
 

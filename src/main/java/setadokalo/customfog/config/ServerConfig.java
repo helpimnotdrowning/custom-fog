@@ -1,18 +1,17 @@
 package setadokalo.customfog.config;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.util.Identifier;
-import org.apache.logging.log4j.Level;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import setadokalo.customfog.CustomFog;
-
-import java.io.*;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.apache.logging.log4j.Level;
+import org.jetbrains.annotations.Nullable;
+
+import net.minecraft.util.Identifier;
+
+import setadokalo.customfog.CustomFog;
 
 public class ServerConfig extends BaseConfig {
 	public static String CONFIG_NAME = CustomFog.MOD_ID + "-server";

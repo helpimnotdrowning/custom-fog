@@ -2,22 +2,19 @@ package setadokalo.customfog.config.gui.widgets;
 
 import java.util.Objects;
 
+import org.joml.Matrix4f;
+
 import com.mojang.blaze3d.systems.RenderSystem;
-
-import net.minecraft.client.render.VertexFormat;
-import org.apache.logging.log4j.Level;
-
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Matrix4f;
-import setadokalo.customfog.CustomFog;
 
 public class DimensionConfigListWidget extends AlwaysSelectedEntryListWidget<DimensionConfigEntry> {
 	private final Screen parent;
@@ -87,11 +84,11 @@ public class DimensionConfigListWidget extends AlwaysSelectedEntryListWidget<Dim
 	}
 
 	@Override
-   public boolean changeFocus(boolean lookForwards) {
+	public boolean changeFocus(boolean lookForwards) {
 		return super.changeFocus(lookForwards);
 	}
 
-	@Override
+	//@Override
 	protected void renderList(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
 		int itemCount = this.getEntryCount();
 		Tessellator tessellator = Tessellator.getInstance();

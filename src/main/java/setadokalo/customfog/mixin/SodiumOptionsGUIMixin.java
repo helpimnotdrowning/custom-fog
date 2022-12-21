@@ -5,11 +5,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.text.Text;
+
 import me.jellysquid.mods.sodium.client.gui.SodiumOptionsGUI;
 import me.jellysquid.mods.sodium.client.gui.widgets.FlatButtonWidget;
 import me.jellysquid.mods.sodium.client.util.Dim2i;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
+
 import setadokalo.customfog.CustomFogClient;
 import setadokalo.customfog.config.gui.CustomFogConfigScreen;
 

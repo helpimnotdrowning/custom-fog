@@ -1,9 +1,10 @@
 package setadokalo.customfog.config;
 
-import org.jetbrains.annotations.NotNull;
-import setadokalo.customfog.CustomFogLogger;
-
 import java.io.File;
+
+import org.jetbrains.annotations.NotNull;
+
+import setadokalo.customfog.CustomFogLogger;
 
 public class CustomFogMixinConfig extends BaseConfig {
 	public CustomFogMixinConfig(File file) {

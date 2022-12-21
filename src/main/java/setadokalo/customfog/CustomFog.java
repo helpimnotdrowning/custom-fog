@@ -1,11 +1,14 @@
 package setadokalo.customfog;
 
+import org.apache.logging.log4j.Level;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
+
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.Identifier;
-import org.apache.logging.log4j.Level;
+
 import setadokalo.customfog.config.gui.CustomFogConfigScreen;
 
 public class CustomFog implements ModInitializer {

@@ -1,16 +1,17 @@
 package setadokalo.customfog.config;
 
+import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.Level;
 import org.jetbrains.annotations.NotNull;
-import setadokalo.customfog.CustomFogLogger;
 
-import javax.management.RuntimeErrorException;
-import java.io.*;
-import java.lang.reflect.InvocationTargetException;
+import net.fabricmc.loader.api.FabricLoader;
+
+import setadokalo.customfog.CustomFogLogger;
 
 public class ConfigLoader {
 	private static final Gson GSON = new GsonBuilder()

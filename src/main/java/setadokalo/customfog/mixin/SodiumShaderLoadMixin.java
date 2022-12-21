@@ -1,19 +1,23 @@
 package setadokalo.customfog.mixin;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.util.Identifier;
-import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.Level;
-import org.spongepowered.asm.mixin.Mixin;
-import me.jellysquid.mods.sodium.client.gl.shader.ShaderLoader;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import setadokalo.customfog.CustomFog;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.Level;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.util.Identifier;
+
+import me.jellysquid.mods.sodium.client.gl.shader.ShaderLoader;
+
+import setadokalo.customfog.CustomFog;
 
 @Mixin(ShaderLoader.class)
 public class SodiumShaderLoadMixin {
