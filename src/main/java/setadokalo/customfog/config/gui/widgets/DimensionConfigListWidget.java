@@ -2,9 +2,9 @@ package setadokalo.customfog.config.gui.widgets;
 
 import java.util.Objects;
 
+import net.minecraft.client.gui.DrawContext;
 import org.joml.Matrix4f;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
@@ -13,7 +13,6 @@ import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 
 public class DimensionConfigListWidget extends AlwaysSelectedEntryListWidget<DimensionConfigEntry> {
@@ -83,13 +82,14 @@ public class DimensionConfigListWidget extends AlwaysSelectedEntryListWidget<Dim
 		this.renderSelection = renderSelection;
 	}
 
-	@Override
-	public boolean changeFocus(boolean lookForwards) {
-		return super.changeFocus(lookForwards);
-	}
+	// idk how to implement this lol
+	//@Override
+	//public boolean changeFocus(boolean lookForwards) {
+	//	return super.changeFocus(lookForwards);
+	//}
 
 	//@Override
-	protected void renderList(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
+	protected void renderList(DrawContext context, int x, int y, int mouseX, int mouseY, float delta) {
 		int itemCount = this.getEntryCount();
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder buffer = tessellator.getBuffer();
@@ -104,9 +104,8 @@ public class DimensionConfigListWidget extends AlwaysSelectedEntryListWidget<Dim
 				if (this.renderSelection && this.isSelectedEntry(index)) {
 					entryLeft = getRowLeft() - 2;
 					int selectionRight = x + rowWidth + 2;
-					RenderSystem.disableTexture();
 					float bgIntensity = this.isFocused() ? 1.0F : 0.5F;
-					Matrix4f matrix = matrices.peek().getPositionMatrix();
+					Matrix4f matrix = context.getMatrices().peek().getPositionMatrix();
 					buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 					buffer.vertex(matrix, entryLeft, entryTop + entryHeight + 2, 0.0F)
 							.color(bgIntensity, bgIntensity, bgIntensity, 1.0F).next();
@@ -127,11 +126,10 @@ public class DimensionConfigListWidget extends AlwaysSelectedEntryListWidget<Dim
 					buffer.vertex(matrix, entryLeft + 1, entryTop - 1, 0.0F)
 							.color(0.0F, 0.0F, 0.0F, 1.0F).next();
 					tessellator.draw();
-					RenderSystem.enableTexture();
 				}
 
 				entryLeft = this.getRowLeft();
-				entry.render(matrices, index, entryTop, entryLeft, rowWidth, entryHeight, mouseX, mouseY, this.isMouseOver(mouseX, mouseY) && Objects.equals(this.getEntryAtPos(mouseX, mouseY), entry), delta);
+				entry.render(context, index, entryTop, entryLeft, rowWidth, entryHeight, mouseX, mouseY, this.isMouseOver(mouseX, mouseY) && Objects.equals(this.getEntryAtPos(mouseX, mouseY), entry), delta);
 			}
 		}
 
@@ -146,7 +144,7 @@ public class DimensionConfigListWidget extends AlwaysSelectedEntryListWidget<Dim
       } else {
 			for (DimensionConfigEntry entry : this.children()) {
 				if (entry.dimNameWidget != null)
-					entry.dimNameWidget.setTextFieldFocused(false);
+					entry.dimNameWidget.setFocused(false);
 			}
 			DimensionConfigEntry entry = this.getEntryAtPosition(mouseX, mouseY);
          if (entry != null) {

@@ -3,6 +3,7 @@ package setadokalo.customfog.config.gui.widgets;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.client.gui.DrawContext;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,7 +16,6 @@ import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.OrderedText;
@@ -247,51 +247,51 @@ public class DimensionConfigEntry extends AlwaysSelectedEntryListWidget.Entry<Di
 	}
 
 	@Override
-	public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX,
-			int mouseY, boolean hovered, float tickDelta) {
+	public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX,
+					   int mouseY, boolean hovered, float tickDelta) {
 		if (nonDimensionEntry) {
 			if (addWidget != null) {
 				addWidget.setWidth(Math.min(200, entryWidth - 10));
 				addWidget.setX(x + entryWidth / 2 - addWidget.getWidth() / 2);
 				addWidget.setY(y);
-				addWidget.render(matrices, mouseX, mouseY, tickDelta);
+				addWidget.render(context, mouseX, mouseY, tickDelta);
 			}
 			return;
 		}
 		if (dimNameWidget != null && removable) {
 			removeWidget.setX(x + entryWidth - removeWidget.getWidth() - 8);
 			removeWidget.setY(y);
-			removeWidget.render(matrices, mouseX, mouseY, tickDelta);
+			removeWidget.render(context, mouseX, mouseY, tickDelta);
 
 			dimNameWidget.setX(x + 8);
 			dimNameWidget.setY(y);
-			dimNameWidget.render(matrices, mouseX, mouseY, tickDelta);
+			dimNameWidget.render(context, mouseX, mouseY, tickDelta);
 
 			configureWidget.setX(removeWidget.getX() - 4 - configureWidget.getWidth());
 
 		} else {
 			configureWidget.setX(x + entryWidth - 8 - configureWidget.getWidth());
-			drawText(matrices, textRenderer, name != null ?
+			drawText(context, textRenderer, name != null ?
 					name :
 				dimensionId == null ? Text.translatable("config.customfog.default") : Text.literal(dimensionId.toString()), x + 12, y + 4, 0xFFFFFF);
 		}
 		configureWidget.setY(y);
-		configureWidget.render(matrices, mouseX, mouseY, tickDelta);
+		configureWidget.render(context, mouseX, mouseY, tickDelta);
 		if (pushToServerWidget != null) {
 			pushToServerWidget.setY(y);
 			pushToServerWidget.setX(configureWidget.getX() - 4 - pushToServerWidget.getWidth());
-			pushToServerWidget.render(matrices, mouseX, mouseY, tickDelta);
+			pushToServerWidget.render(context, mouseX, mouseY, tickDelta);
 			if (pushAsOverrideWidget != null) {
 				pushAsOverrideWidget.setY(y);
 				pushAsOverrideWidget.setX(pushToServerWidget.getX() - 4 - pushAsOverrideWidget.getWidth());
-				pushAsOverrideWidget.render(matrices, mouseX, mouseY, tickDelta);
+				pushAsOverrideWidget.render(context, mouseX, mouseY, tickDelta);
 			}
 		}
 	}
 
-	public static void drawText(MatrixStack matrices, TextRenderer textRenderer, Text text, int x, int y, int color) {
+	public static void drawText(DrawContext context, TextRenderer textRenderer, Text text, int x, int y, int color) {
 		OrderedText orderedText = text.asOrderedText();
-		textRenderer.drawWithShadow(matrices, orderedText, (float)x, (float)y, color);
+		context.drawTextWithShadow(textRenderer, orderedText, x, y, color);
 	}
 	
 	public void tick() {

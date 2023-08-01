@@ -2,6 +2,7 @@ package setadokalo.customfog.config.gui;
 
 import java.util.Map;
 
+import net.minecraft.client.gui.DrawContext;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,7 +13,6 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -226,12 +226,12 @@ public class CustomFogConfigScreen extends Screen {
 	}
 
   @Override
-  public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
+  public void render(DrawContext context, int mouseX, int mouseY, float delta)
   {
-		this.renderBackground(matrices);
-		super.render(matrices, mouseX, mouseY, delta);
+		this.renderBackground(context);
+		super.render(context, mouseX, mouseY, delta);
 		// Draw the title text.
-		drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
+		context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
   }
 
 public void openScreen(DimensionConfigScreen dimensionConfigScreen) {

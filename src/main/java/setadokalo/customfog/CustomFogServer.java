@@ -77,10 +77,10 @@ public class CustomFogServer implements DedicatedServerModInitializer {
 	private static int customFogReload(CommandContext<ServerCommandSource> ctx) {
 		config = ServerConfig.getConfig();
 		sendUpdatedConfig(ctx.getSource().getServer());
-		ctx.getSource().sendFeedback(
-				Text.translatable("modid.customfog").formatted(Formatting.GOLD)
-				.append(Text.translatable("chat.customfog.reloaded").formatted(Formatting.YELLOW)),
-			true);
+		java.util.function.Supplier<Text> textSupplier = () -> Text.translatable("modid.customfog").formatted(Formatting.GOLD)
+				.append(Text.translatable("chat.customfog.reloaded").formatted(Formatting.YELLOW));
+
+		ctx.getSource().sendFeedback(textSupplier, true);
 		return 0;
 	}
 

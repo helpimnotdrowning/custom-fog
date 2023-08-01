@@ -3,6 +3,7 @@ package setadokalo.customfog.config.gui.widgets;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import net.minecraft.client.gui.DrawContext;
 import org.jetbrains.annotations.NotNull;
 
 import org.joml.Matrix4f;
@@ -14,7 +15,6 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.client.render.*;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 
@@ -289,20 +289,20 @@ public class ResizingRangeSlider extends SliderWidget {
 	}
 
 	@Override
-	protected void setFocused(boolean focused) {
+	public void setFocused(boolean focused) {
 		super.setFocused(focused);
 	}
 
-	@Override
-	protected void onFocusedChanged(boolean newFocused) {
-		if (!newFocused && isTyping) {
-			finishTyping();
-		}
-	}
+	//@Override
+	//protected void onFocusedChanged(boolean newFocused) {
+	//	if (!newFocused && isTyping) {
+	//		finishTyping();
+	//	}
+	//}
 
 	@Override
-	public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-		super.renderButton(matrices, mouseX, mouseY, delta);
+	public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
+		super.renderButton(context, mouseX, mouseY, delta);
 		if (isTyping) {
 			MinecraftClient minecraftClient = MinecraftClient.getInstance();
 			TextRenderer textRenderer = minecraftClient.textRenderer;
@@ -312,7 +312,8 @@ public class ResizingRangeSlider extends SliderWidget {
 			} catch (NumberFormatException e) {
 				isValid = false;
 			}
-			textRenderer.draw(matrices, currentText, getX() + 4, this.getY() + (float)(this.height / 2 - 4), isValid ? 0xFFFFFF : 0xFF5555);
+			context.drawTextWithShadow(textRenderer, Text.of(currentText), getX() + 4, this.getY() + (this.height / 2 - 4), isValid ? 0xFFFFFF : 0xFF5555);
+
 			if (selectedEnd != selectedStart) {
 				int sStart = Math.min(Math.min(selectedStart, selectedEnd), currentText.length());
 				int sEnd = Math.min(Math.max(selectedStart, selectedEnd), currentText.length());
@@ -321,7 +322,7 @@ public class ResizingRangeSlider extends SliderWidget {
 				RenderSystem.setShader(GameRenderer::getPositionColorProgram);
 				BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 				bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-				Matrix4f mat = matrices.peek().getPositionMatrix();
+				Matrix4f mat = context.getMatrices().peek().getPositionMatrix();
 				bufferBuilder.vertex(mat, (float)startX, (float)(this.getY() + ((this.height - 8)) / 2) + textRenderer.fontHeight + 1.0F, -40.0F)
 						.color(255, 255, 255, 255).next();
 				bufferBuilder.vertex(mat, (float)endX, (float)(this.getY() + ((this.height - 8)) / 2) + textRenderer.fontHeight + 1.0F, -40.0F)
@@ -331,29 +332,30 @@ public class ResizingRangeSlider extends SliderWidget {
 				bufferBuilder.vertex(mat, (float)startX,   (float)(this.getY() + ((this.height - 8)) / 2) - 1.0F, -40.0F)
 						.color(255, 255, 255, 255).next();
 				BufferRenderer.draw(bufferBuilder.end());
-				textRenderer.draw(matrices, currentText.substring(sStart, sEnd), startX + 1, this.getY() + (float)(this.height / 2 - 3), 0x30000000);
-				textRenderer.draw(matrices, currentText.substring(sStart, sEnd), startX, this.getY() + (float)(this.height / 2 - 4), 0x0000FF);
+				context.drawTextWithShadow(textRenderer, currentText.substring(sStart, sEnd), startX + 1, this.getY() + (this.height / 2 - 3), 0x30000000);
+				context.drawTextWithShadow(textRenderer, currentText.substring(sStart, sEnd), startX, this.getY() + (this.height / 2 - 4), 0x0000FF);
 			}
 
 			if (focusedTicks / 6 % 2 == 0) {
 				if (selectedStart != currentText.length() || selectedEnd != currentText.length()) {
 					int textWidth = textRenderer.getWidth(currentText.substring(0, selectedStart));
-					drawStringWithShadow(matrices, textRenderer, "|", getX() + 4 + textWidth, this.getY() + (this.height - 8) / 2, 0x888888);
+					context.drawTextWithShadow(textRenderer, "|", getX() + 4 + textWidth, this.getY() + (this.height - 8) / 2, 0x888888);
 				} else {
 					int textWidth = textRenderer.getWidth(currentText);
-					drawStringWithShadow(matrices, textRenderer, "_", getX() + 4 + textWidth, this.getY() + (this.height - 8) / 2, 0x888888);
+					context.drawTextWithShadow(textRenderer, "_", getX() + 4 + textWidth, this.getY() + (this.height - 8) / 2, 0x888888);
 				}
 			}
 		}
 	}
 
-	@Override
-	protected void renderBackground(MatrixStack matrices, MinecraftClient client, int mouseX, int mouseY) {
+	// TODO: FIXME "No black box when clicking to type slider value"
+	//@Override
+	protected void renderBackground(DrawContext context, MinecraftClient client, int mouseX, int mouseY) {
 		if (isTyping) {
-			fill(matrices, this.getX() - 1, this.getY() - 1, this.getX() + this.width + 1, this.getY() + this.height + 1, -1);
-			fill(matrices, this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, -16777216);
+			//fill(matrices, this.getX() - 1, this.getY() - 1, this.getX() + this.width + 1, this.getY() + this.height + 1, -1);
+			//fill(matrices, this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, -16777216);
 		} else {
-			super.renderBackground(matrices, client, mouseX, mouseY);
+			//super.renderBackground(context, client, mouseX, mouseY);
 		}
 	}
 }

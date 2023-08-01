@@ -1,10 +1,10 @@
 package setadokalo.customfog.config.gui;
 
+import net.minecraft.client.gui.DrawContext;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -215,13 +215,13 @@ public class DimensionConfigScreen extends Screen {
 
 
 	@Override
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+	public void render(DrawContext context, int mouseX, int mouseY, float delta) {
 		if (this.client == null || this.client.world == null) {
-			this.renderBackground(matrices);
+			this.renderBackground(context);
 		}
-		super.render(matrices, mouseX, mouseY, delta);
+		super.render(context, mouseX, mouseY, delta);
 		// Draw the title text.
-		drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
+		context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
 	}
 
 }
